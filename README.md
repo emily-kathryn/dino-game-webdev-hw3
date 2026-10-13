@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# Dino Game
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A small React endless-runner based on the classic browser dinosaur game. Jump over cacti, duck under flying pterodactyls, and collect shields while the background changes from day to night.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Keyboard and on-screen controls to jump, duck, pause, resume, and restart.
+- Cactus and pterodactyl obstacles that get faster and more frequent during a run.
+- Day/night background cycle with moving clouds, stars, and a moon.
+- A collectible shield that protects against one collision.
+- Best score and achievement progress saved in browser `localStorage`.
+- An expandable achievements panel.
 
-### `npm start`
+## Controls
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+| Input | Action |
+| --- | --- |
+| `Space` | Start a run or jump |
+| `↓` Down Arrow | Duck while held |
+| `P` | Pause or resume |
+| Restart button | Start a fresh run |
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Run locally
 
-### `npm test`
+You need Node.js and npm installed.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm install
+npm start
+```
 
-### `npm run build`
+Open [http://localhost:3000](http://localhost:3000). The current score and best score appear above the game. Use the achievements panel below the controls to see which milestones have been unlocked.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To run the test suite or create a production build:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npm test -- --watchAll=false
+npm run build
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The best score and achievement unlocks are kept in the current browser's local storage. Clear the site's local storage to reset this progress.
 
-### `npm run eject`
+## Credits
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project builds on the Create React App Dino Game starter project and its original dinosaur and cactus images. The starter was provided for Web Development coursework; the controls, obstacles, shield, day/night cycle, high score, and achievements were added for this version.

@@ -1,64 +1,456 @@
-.game {
-  width: 600px;
-  height: 225px;
-  border: 1px solid black;
-  margin: auto;
+:root {
+  --ink: #24302b;
+  --muted: #818b81;
+  --orange: #e9784c;
+  --line: #e9e7dc;
+  --forest: #526b4f;
 }
 
-#dino {
-  width: 50px;
-  height: 50px;
-  background-image: url(img/trex.png);
-  background-size: 50px 50px;
+.dino-app {
+  width: min(800px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0;
+  color: var(--ink);
+}
+
+.page-header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.page-header h1,
+.overlay-card h2 {
+  margin: 0;
+  font-family: "Arial", "Helvetica Neue", sans-serif;
+  letter-spacing: -0.04em;
+}
+
+.page-header h1 {
+  font-size: 32px;
+}
+
+.game-column {
+  width: min(760px, 100%);
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+}
+
+.scorebar {
+  display: flex;
+  align-items: center;
+  min-height: 58px;
+  gap: 25px;
+  padding: 8px 16px;
+}
+
+.scorebar > div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.scorebar > div > span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.score-current strong,
+.score-best strong {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.score-best strong {
+  color: #65705f;
+}
+
+.shield-status {
+  margin-left: auto;
+  color: #9a9f94;
+  font-size: 12px;
+}
+
+.shield-status.is-active {
+  color: #ae7d31;
+}
+
+.game-world {
   position: relative;
-  top: 150px;
+  height: 280px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #e9f1e6 0%, #f2f0dc 72%, #ebe7d0 100%);
+  transition: background 2.4s ease;
+  isolation: isolate;
 }
 
-.jump {
-  animation: jump 0.3s linear;
+.game-world.is-night {
+  background: linear-gradient(180deg, #283a4a 0%, #40544f 72%, #62705a 100%);
 }
 
-@keyframes jump {
-  0% {
-    top: 150px;
-  }
-
-  30% {
-    top: 130px;
-  }
-
-  50% {
-    top: 80px;
-  }
-
-  80% {
-    top: 130px;
-  }
-
-  100% {
-    top: 150px;
-  }
+.sky-decorations,
+.distant-hills,
+.ground {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
-#cactus {
-  width: 20px;
-  height: 40px;
-  position: relative;
-  top: 110px;
-  left: 580px;
-
-  background-image: url("img/cactus.png");
-  background-size: 20px 40px;
-
-  animation: block 1s infinite linear;
+.moon {
+  position: absolute;
+  top: 36px;
+  right: 15%;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff2c7;
+  box-shadow: 0 0 25px rgb(255 233 168 / 48%);
+  opacity: 0;
+  transition: opacity 2s ease;
 }
 
-@keyframes block {
-  0% {
-    left: 580px;
+.is-night .moon,
+.is-night .stars {
+  opacity: 0.85;
+}
+
+.stars {
+  position: absolute;
+  color: #fff1c7;
+  font-size: 14px;
+  letter-spacing: 9px;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+.stars-one {
+  top: 34px;
+  left: 14%;
+}
+
+.stars-two {
+  top: 83px;
+  right: 25%;
+  font-size: 11px;
+}
+
+.cloud {
+  position: absolute;
+  width: 58px;
+  height: 17px;
+  border-radius: 20px;
+  background: rgb(255 255 255 / 65%);
+  opacity: 0.75;
+  animation: cloud-drift 22s linear infinite alternate;
+  transition: opacity 2s ease;
+}
+
+.cloud i {
+  position: absolute;
+  bottom: 5px;
+  width: 22px;
+  height: 21px;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.cloud i:first-child {
+  left: 9px;
+}
+
+.cloud i:nth-child(2) {
+  left: 23px;
+  width: 27px;
+  height: 26px;
+}
+
+.cloud i:last-child {
+  right: 2px;
+}
+
+.cloud-one {
+  top: 72px;
+  left: 19%;
+}
+
+.cloud-two {
+  top: 112px;
+  right: 36%;
+  transform: scale(0.72);
+  animation-duration: 29s;
+  animation-direction: alternate-reverse;
+}
+
+.is-night .cloud {
+  opacity: 0.2;
+}
+
+@keyframes cloud-drift {
+  from { margin-left: -12px; }
+  to { margin-left: 36px; }
+}
+
+.distant-hills {
+  top: auto;
+  bottom: 40px;
+  height: 72px;
+  background:
+    radial-gradient(ellipse 85px 43px at 15% 100%, #cbd5bb 99%, transparent 100%),
+    radial-gradient(ellipse 110px 52px at 47% 100%, #d8ddc2 99%, transparent 100%),
+    radial-gradient(ellipse 120px 49px at 91% 100%, #ced8bd 99%, transparent 100%);
+  opacity: 0.75;
+  transition: opacity 2.4s ease;
+}
+
+.is-night .distant-hills {
+  opacity: 0.45;
+}
+
+.ground {
+  top: auto;
+  bottom: 0;
+  height: 41px;
+  border-top: 2px solid #9ea77d;
+  background: repeating-linear-gradient(170deg, #e3dfc5 0 10px, #d9d8bb 11px 12px, #e3dfc5 13px 22px);
+}
+
+.ground span {
+  position: absolute;
+  top: 11px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, #aab18b 0 10px, transparent 10px 26px);
+  opacity: 0.65;
+}
+
+.dino-sprite,
+.game-entity {
+  position: absolute;
+  z-index: 2;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
+
+.dino-sprite {
+  width: 48px;
+  height: 52px;
+  background-image: url("./img/trex.png");
+  filter: drop-shadow(0 1px 1px rgb(36 48 43 / 32%));
+  transform-origin: center bottom;
+  transition: filter 0.2s ease, height 0.12s ease;
+}
+
+.dino-sprite.is-ducking {
+  height: 32px;
+  background-size: 100% 160%;
+  background-position: center 71%;
+}
+
+.dino-sprite.has-shield {
+  filter: drop-shadow(0 0 7px #ffd26e) drop-shadow(0 1px 1px rgb(36 48 43 / 32%));
+}
+
+.is-night .dino-sprite {
+  filter: drop-shadow(0 0 2px #f7f5ec);
+}
+
+.is-night .dino-sprite.has-shield {
+  filter: drop-shadow(0 0 7px #ffd26e);
+}
+
+.game-entity.cactus {
+  background-image: url("./img/cactus.png");
+}
+
+.game-entity.pterodactyl {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 54 34'%3E%3Cpath fill='%23536b4f' d='M2 19 15 15 22 2 29 13 45 7 39 17 52 19 37 23 31 31 26 22 11 29 17 21z'/%3E%3Ccircle cx='39' cy='16' r='1.6' fill='%23f7f4e8'/%3E%3C/svg%3E");
+  animation: flap 0.28s ease-in-out infinite alternate;
+}
+
+.is-night .game-entity.cactus,
+.is-night .game-entity.pterodactyl {
+  filter: brightness(1.3) drop-shadow(0 0 2px #f7f5ec);
+}
+
+@keyframes flap {
+  to { transform: translateY(-4px) rotate(-4deg); }
+}
+
+.game-entity.shield {
+  border: 2px solid #d69e45;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff6ce 0 32%, #e8bd69 35% 50%, #fff3c9 53% 60%, transparent 63%);
+  box-shadow: 0 0 14px rgb(255 213 109 / 64%);
+  animation: shield-pulse 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes shield-pulse {
+  to { filter: brightness(1.15); transform: scale(1.08); }
+}
+
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  background: rgb(28 43 36 / 28%);
+}
+
+.overlay-ready {
+  background: rgb(245 245 231 / 35%);
+}
+
+.overlay-card {
+  width: min(270px, calc(100% - 32px));
+  padding: 20px;
+  border: 1px solid #e7e5da;
+  border-radius: 8px;
+  background: #fffdf5;
+  text-align: center;
+}
+
+.overlay-card h2 {
+  margin-bottom: 12px;
+  font-size: 24px;
+}
+
+.overlay-card p {
+  margin: 8px 0;
+  color: #65705f;
+  font-size: 13px;
+}
+
+.primary-button {
+  padding: 9px 16px;
+  border: 0;
+  border-radius: 5px;
+  background: var(--forest);
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.primary-button:hover {
+  background: #405b3f;
+}
+
+.keyboard-hint {
+  font-size: 11px !important;
+}
+
+kbd {
+  padding: 2px 5px;
+  border: 1px solid #e4e2d8;
+  border-radius: 4px;
+  background: #faf9f4;
+  color: #515b50;
+  font: 10px "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.controls-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  min-height: 48px;
+  padding: 8px 12px;
+  color: #697267;
+  font-size: 12px;
+}
+
+.controls-strip > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.restart-button {
+  padding: 5px 9px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+  color: #52614e;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.achievement-toast {
+  margin: 0;
+  padding: 0 12px 10px;
+  color: #8e682a;
+  font-size: 12px;
+  text-align: center;
+}
+
+.achievements-panel {
+  width: min(760px, 100%);
+  margin: 12px auto 0;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #fff;
+  color: #50594f;
+  font-size: 13px;
+}
+
+.achievements-panel summary {
+  padding: 10px 13px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.achievement-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 14px;
+  margin: 0;
+  padding: 0 13px 12px;
+  list-style: none;
+}
+
+.achievement-list li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #858b80;
+  font-size: 11px;
+}
+
+.achievement-list li.earned {
+  color: #526b4f;
+}
+
+.achievement-mark {
+  color: #a5aa9e;
+}
+
+.earned .achievement-mark {
+  color: #b68536;
+}
+
+@media (max-width: 480px) {
+  .dino-app {
+    width: calc(100% - 20px);
+    padding-top: 22px;
   }
 
-  100% {
-    left: -5px;
+  .scorebar {
+    gap: 16px;
+    padding: 8px 11px;
+  }
+
+  .controls-strip {
+    gap: 9px;
+    font-size: 10px;
+  }
+
+  .achievement-list {
+    grid-template-columns: 1fr;
   }
 }
